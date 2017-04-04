@@ -19,7 +19,7 @@ function wpse_get_images($id) {
     /**
      * Loop through each attachment
      */
-     //print_r($attachments);
+     
     foreach ( $attachments as $id  => $attachment ) :
         
         $title = esc_html( $attachment->post_title, 1 );
@@ -44,7 +44,13 @@ function wpse_get_images($id) {
         }
   }
 
-  function get_all_images(){
+/*
+    These are the only two functions that is used by the UI to render images+
+    Show all images from post loop twice
+
+    see test.php for examples on both function 
+*/
+  function K_images_by_post(){
       if("null" !== get_all_post_id()){
           foreach(get_all_post_id() as $key => $id){
             $images[$key] = wpse_get_images($id);
@@ -53,4 +59,26 @@ function wpse_get_images($id) {
       }else{
           return '';
       }
+  }
+
+/*
+    Show image from post in one array loop once
+*/
+  function K_all_images(){
+      $counter = 0;
+      $images = array();
+      $imagesByPost = k_images_by_post();
+      if(isset($imagesByPost) && !empty($imagesByPost)){
+          foreach($imagesByPost as $key => $post){
+            if(!empty($post)){
+                foreach($post  as $imageId => $image){
+                    $image['id'] = $imageId;
+                    $image['post_id'] = $key;
+                    $images[$counter] =$image;
+                    $counter++;                  
+                }
+            }
+          }
+      }
+      return $images;
   }
