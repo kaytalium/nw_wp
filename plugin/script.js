@@ -6,7 +6,7 @@
 
         // Get all the cb_btn elements on the page
         let _toggleBtns = document.getElementsByClassName('cb_btn')
-        console.log(_toggleBtns)
+
         //Loop over all elements and add the click function
         for (var i = 0; i < _toggleBtns.length; i++) {
             _toggleBtns[i].addEventListener('click', function (e) {
